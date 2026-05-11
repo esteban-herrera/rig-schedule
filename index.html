@@ -32,22 +32,22 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: end;
-      margin-bottom: 72px;
-      padding-bottom: 28px;
+      margin-bottom: 48px;
+      padding-bottom: 20px;
       border-bottom: var(--border);
       animation: fadeUp 0.5s ease both;
     }
 
     h1 {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(52px, 9vw, 104px);
+      font-size: clamp(32px, 5.5vw, 64px);
       line-height: 0.88;
       letter-spacing: 0.02em;
     }
 
     .header-block {
-      width: 88px;
-      height: 88px;
+      width: 60px;
+      height: 60px;
       background: var(--black);
       border: var(--border);
       box-shadow: var(--shadow);
@@ -60,13 +60,13 @@
 
     .header-block .mono {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 34px;
+      font-size: 22px;
       color: var(--cream);
       line-height: 1;
     }
 
     .header-block .sub {
-      font-size: 8px;
+      font-size: 7px;
       color: rgba(244,239,230,0.5);
       letter-spacing: 0.14em;
       text-transform: uppercase;
@@ -394,13 +394,13 @@
 
   <footer class="page-footer">
     <span>Redmond Investment Group · Meeting Schedule</span>
-    <span>Jun 2026 – Sep 2027 · 12 Sessions</span>
+    <span>May 2026 – Sep 2027 · 12 Sessions</span>
   </footer>
 
   <script>
     // type omitted — computed below by alternating per member
     const meetings = [
-      { date: '2026-06-14', member: 'JD' },
+      { date: '2026-05-10', member: 'JD' },
       { date: '2026-09-13', member: 'Andrew' },
       { date: '2026-10-11', member: 'Esteban' },
       { date: '2026-11-08', member: 'Ryan' },
@@ -416,7 +416,7 @@
 
     // Each member's first appearance type; subsequent appearances flip
     const MEMBER_BASE_TYPE = {
-      JD: 'educational', Andrew: 'pitch', Esteban: 'educational',
+      JD: 'pitch', Andrew: 'pitch', Esteban: 'educational',
       Ryan: 'pitch', Jess: 'educational', Adam: 'pitch'
     };
     const memberOccurrence = {};
@@ -433,7 +433,7 @@
 
     const BREAK_MONTHS   = new Set(['2026-07','2026-08','2027-07','2027-08']);
     const DISPLAY_MONTHS = [
-      '2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12',
+      '2026-05','2026-06','2026-07','2026-08','2026-09','2026-10','2026-11','2026-12',
       '2027-01','2027-02','2027-03','2027-04','2027-05','2027-06','2027-07','2027-08','2027-09'
     ];
     const MONTH_NAMES = ['January','February','March','April','May','June',
