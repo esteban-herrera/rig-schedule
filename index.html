@@ -326,6 +326,27 @@
       from { opacity: 0; transform: translateY(14px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      body { padding: 24px 16px; }
+
+      .header { margin-bottom: 40px; padding-bottom: 20px; }
+      .header-block { width: 64px; height: 64px; }
+      .header-block .mono { font-size: 26px; }
+
+      .section-header { font-size: 26px; }
+
+      .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { min-width: 560px; }
+      th, td { padding: 12px 14px; }
+
+      .calendar-grid { grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 12px; }
+
+      .table-section { margin-bottom: 56px; }
+
+      .page-footer { flex-direction: column; gap: 6px; }
+    }
   </style>
 </head>
 <body>
@@ -377,20 +398,33 @@
   </footer>
 
   <script>
+    // type omitted — computed below by alternating per member
     const meetings = [
-      { date: '2026-06-14', type: 'educational', member: 'JD' },
-      { date: '2026-09-13', type: 'pitch',       member: 'Andrew' },
-      { date: '2026-10-11', type: 'educational', member: 'Esteban' },
-      { date: '2026-11-08', type: 'pitch',       member: 'Ryan' },
-      { date: '2026-12-13', type: 'educational', member: 'Jess' },
-      { date: '2027-01-10', type: 'pitch',       member: 'Adam' },
-      { date: '2027-02-14', type: 'educational', member: 'JD' },
-      { date: '2027-03-14', type: 'pitch',       member: 'Andrew' },
-      { date: '2027-04-11', type: 'educational', member: 'Esteban' },
-      { date: '2027-05-09', type: 'pitch',       member: 'Ryan' },
-      { date: '2027-06-13', type: 'educational', member: 'Jess' },
-      { date: '2027-09-12', type: 'pitch',       member: 'Adam' },
+      { date: '2026-06-14', member: 'JD' },
+      { date: '2026-09-13', member: 'Andrew' },
+      { date: '2026-10-11', member: 'Esteban' },
+      { date: '2026-11-08', member: 'Ryan' },
+      { date: '2026-12-13', member: 'Jess' },
+      { date: '2027-01-10', member: 'Adam' },
+      { date: '2027-02-14', member: 'JD' },
+      { date: '2027-03-14', member: 'Andrew' },
+      { date: '2027-04-11', member: 'Esteban' },
+      { date: '2027-05-09', member: 'Ryan' },
+      { date: '2027-06-13', member: 'Jess' },
+      { date: '2027-09-12', member: 'Adam' },
     ];
+
+    // Each member's first appearance type; subsequent appearances flip
+    const MEMBER_BASE_TYPE = {
+      JD: 'educational', Andrew: 'pitch', Esteban: 'educational',
+      Ryan: 'pitch', Jess: 'educational', Adam: 'pitch'
+    };
+    const memberOccurrence = {};
+    meetings.forEach(m => {
+      const n = (memberOccurrence[m.member] = (memberOccurrence[m.member] || 0) + 1);
+      const base = MEMBER_BASE_TYPE[m.member];
+      m.type = (n % 2 === 1) ? base : (base === 'educational' ? 'pitch' : 'educational');
+    });
 
     const MEMBER_COLORS = {
       JD: '#C8281E', Andrew: '#0057FF', Esteban: '#E8B400',
