@@ -32,7 +32,7 @@
       display: grid;
       grid-template-columns: 1fr auto;
       align-items: end;
-      margin-bottom: 48px;
+      margin-bottom: 40px;
       padding-bottom: 20px;
       border-bottom: var(--border);
       animation: fadeUp 0.5s ease both;
@@ -72,12 +72,50 @@
       text-transform: uppercase;
     }
 
+    /* ── NEXT BANNER ── */
+    .next-banner {
+      border: var(--border);
+      box-shadow: var(--shadow-lg);
+      background: var(--black);
+      color: var(--cream);
+      padding: 18px 24px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .next-banner-label {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(244,239,230,0.5);
+      flex-shrink: 0;
+    }
+
+    .next-banner-date {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: 0.04em;
+      line-height: 1;
+    }
+
+    .next-banner-divider {
+      width: 1px;
+      height: 22px;
+      background: rgba(244,239,230,0.2);
+      flex-shrink: 0;
+    }
+
     /* ── SECTION HEADER ── */
     .section-header {
       font-family: 'Bebas Neue', sans-serif;
       font-size: 34px;
       letter-spacing: 0.04em;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
       padding-bottom: 10px;
       border-bottom: var(--border);
       display: flex;
@@ -93,6 +131,30 @@
       color: var(--cream);
       padding: 3px 10px;
       letter-spacing: 0.08em;
+    }
+
+    /* ── MEMBER LEGEND ── */
+    .member-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      margin-bottom: 18px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .legend-pip {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 1.5px solid var(--black);
+      flex-shrink: 0;
     }
 
     /* ── TABLE ── */
@@ -132,10 +194,10 @@
       font-size: 13px;
       border-bottom: 1.5px solid #EBEBEB;
       vertical-align: middle;
+      transition: background 0.12s;
     }
 
     tr:last-child td { border-bottom: none; }
-    tbody tr { transition: background 0.12s; }
     tbody tr:hover td { background: #FAFAFA; }
 
     .meeting-num {
@@ -145,11 +207,6 @@
     }
 
     .date-cell { font-weight: 700; }
-
-    .day-cell {
-      color: #777;
-      font-size: 12px;
-    }
 
     .type-badge {
       display: inline-flex;
@@ -180,6 +237,35 @@
       flex-shrink: 0;
     }
 
+    /* past rows — dimmed */
+    tbody tr.past-row td { color: #BBBBBB; }
+    tbody tr.past-row .type-badge { opacity: 0.45; }
+    tbody tr.past-row .member-pip { opacity: 0.45; }
+    tbody tr.past-row .meeting-num { color: #DDDDDD; }
+    tbody tr.past-row:hover td { background: #FAFAFA; }
+
+    /* next meeting row — yellow accent */
+    tbody tr.next-row td:first-child { border-left: 3px solid var(--yellow); }
+    tbody tr.next-row { background: #FDFBE8; }
+    tbody tr.next-row:hover td { background: #FAF7D6; }
+
+    /* ── NOTES LINK ── */
+    .notes-link {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      border: 1.5px solid var(--black);
+      padding: 3px 9px;
+      display: inline-block;
+      transition: background 0.12s, color 0.12s;
+      white-space: nowrap;
+    }
+    .notes-link:hover { background: var(--black); color: var(--cream); }
+
+    .no-notes { color: #CCCCCC; font-size: 13px; }
+
     /* ── PAGE FOOTER ── */
     .page-footer {
       margin-top: 64px;
@@ -199,10 +285,10 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── NOTES ── */
+    /* ── NOTES SECTION ── */
     .notes-section {
       margin-top: 80px;
-      animation: fadeUp 0.5s 0.3s ease both;
+      animation: fadeUp 0.5s 0.2s ease both;
     }
 
     .note-card {
@@ -221,10 +307,22 @@
       align-items: center;
       gap: 14px;
       flex-wrap: wrap;
+      cursor: pointer;
+      user-select: none;
     }
 
     .note-card-header .meeting-num { color: rgba(244,239,230,0.45); }
     .note-card-header .date-cell   { color: var(--cream); }
+
+    .note-chevron {
+      font-size: 14px;
+      color: rgba(244,239,230,0.5);
+      flex-shrink: 0;
+      transition: transform 0.18s;
+    }
+
+    .note-card.collapsed .note-body    { display: none; }
+    .note-card.collapsed .note-chevron { transform: rotate(-90deg); }
 
     .note-back-link {
       margin-left: auto;
@@ -272,34 +370,21 @@
     .txn-badge.buy  { background: #1A9940; color: white; }
     .txn-badge.sell { background: var(--red); color: white; }
 
-    .notes-link {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--black);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      border: 1.5px solid var(--black);
-      padding: 3px 9px;
-      display: inline-block;
-      transition: background 0.12s, color 0.12s;
-      white-space: nowrap;
-    }
-    .notes-link:hover { background: var(--black); color: var(--cream); }
-
-    .no-notes { color: #CCCCCC; font-size: 13px; }
-
     /* ── MOBILE ── */
     @media (max-width: 640px) {
       body { padding: 24px 16px; }
 
-      .header { margin-bottom: 40px; padding-bottom: 20px; }
+      .header { margin-bottom: 32px; padding-bottom: 20px; }
       .header-block { width: 64px; height: 64px; }
       .header-block .mono { font-size: 26px; }
 
       .section-header { font-size: 26px; }
 
+      .next-banner { gap: 12px; padding: 14px 16px; margin-bottom: 28px; }
+      .next-banner-divider { display: none; }
+
       .table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      table { min-width: 620px; }
+      table { min-width: 500px; }
       th, td { padding: 12px 14px; }
 
       .table-section { margin-bottom: 56px; }
@@ -319,19 +404,22 @@
     </div>
   </header>
 
+  <!-- ── NEXT MEETING BANNER ── -->
+  <div id="next-banner"></div>
+
   <!-- ── TABLE ── -->
   <div class="table-section">
     <div class="section-header">
       <span class="section-num">01</span>
       Schedule Table
     </div>
+    <div id="member-legend" class="member-legend"></div>
     <div class="table-wrapper">
       <table>
         <thead>
           <tr>
             <th>#</th>
             <th>Date</th>
-            <th>Day</th>
             <th>Time</th>
             <th>Meeting Type</th>
             <th>Presenter</th>
@@ -391,22 +479,57 @@
       Ryan: '#1A9940', Jess: '#D45F00', Adam: '#7B16B0'
     };
 
-    const FULL_DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const nextMeeting = meetings.find(m => new Date(m.date + 'T12:00:00') >= today);
+
+    // ── NEXT BANNER ──
+    if (nextMeeting) {
+      const d   = new Date(nextMeeting.date + 'T12:00:00');
+      const fmt = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const tc  = nextMeeting.type === 'educational' ? 'educational' : 'pitch';
+      const tl  = nextMeeting.type === 'educational' ? 'Educational' : 'Stock Pitch';
+      document.getElementById('next-banner').innerHTML = `
+        <div class="next-banner">
+          <span class="next-banner-label">Next Meeting</span>
+          <div class="next-banner-divider"></div>
+          <span class="next-banner-date">${fmt}</span>
+          <div class="next-banner-divider"></div>
+          <span class="type-badge ${tc}">${tl}</span>
+          <div class="member-cell">
+            <span class="member-pip" style="background:${MEMBER_COLORS[nextMeeting.member]};border-color:rgba(244,239,230,0.4);"></span>
+            <span style="color:var(--cream);font-weight:700;">${nextMeeting.member}</span>
+          </div>
+        </div>`;
+    }
+
+    // ── MEMBER LEGEND ──
+    const legendEl = document.getElementById('member-legend');
+    Object.entries(MEMBER_COLORS).forEach(([name, color]) => {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<span class="legend-pip" style="background:${color};"></span>${name}`;
+      legendEl.appendChild(item);
+    });
 
     // ── TABLE ──
     const tbody = document.getElementById('schedule-tbody');
     meetings.forEach((m, i) => {
-      const d   = new Date(m.date + 'T12:00:00');
-      const fmt = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-      const tc  = m.type === 'educational' ? 'educational' : 'pitch';
-      const tl  = m.type === 'educational' ? 'Educational' : 'Stock Pitch';
-      const tr  = document.createElement('tr');
+      const d      = new Date(m.date + 'T12:00:00');
+      const fmt    = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      const tc     = m.type === 'educational' ? 'educational' : 'pitch';
+      const tl     = m.type === 'educational' ? 'Educational' : 'Stock Pitch';
+      const isPast = d < today;
+      const isNext = nextMeeting && m.date === nextMeeting.date;
+      const tr     = document.createElement('tr');
       tr.id = 'row-' + (i + 1);
+      if (isPast) tr.classList.add('past-row');
+      if (isNext) tr.classList.add('next-row');
       const hasNotes = m.topic || m.transactions.length;
       tr.innerHTML = `
         <td class="meeting-num">${String(i + 1).padStart(2,'0')}</td>
         <td class="date-cell">${fmt}</td>
-        <td class="day-cell">${FULL_DAYS[d.getDay()]}</td>
         <td>7:30 – 8:30 PM</td>
         <td><span class="type-badge ${tc}">${tl}</span></td>
         <td>
@@ -447,7 +570,6 @@
         }).join('');
       }
 
-      // Combine scheduled meeting notes + extra notes, sort by date
       const allNotes = [];
       meetings.forEach((m, i) => {
         if (m.topic || m.transactions.length)
@@ -461,7 +583,7 @@
 
       allNotes.forEach(entry => {
         const card = document.createElement('div');
-        card.className = 'note-card';
+        card.className = 'note-card collapsed';
 
         if (entry.type === 'meeting') {
           const { m, i } = entry;
@@ -480,7 +602,8 @@
                 <span class="member-pip" style="background:${MEMBER_COLORS[m.member]};border-color:rgba(244,239,230,0.4);"></span>
                 <span style="color:var(--cream);font-weight:700;">${m.member}</span>
               </div>
-              <a class="note-back-link" href="#row-${i+1}">↑ Table</a>
+              <a class="note-back-link" href="#row-${i+1}" onclick="event.stopPropagation()">↑ Table</a>
+              <span class="note-chevron">▾</span>
             </div>
             <div class="note-body">
               ${m.topic ? `<div class="note-topic"><span class="note-topic-label">Topic</span>${m.topic}</div>` : ''}
@@ -495,13 +618,25 @@
             <div class="note-card-header">
               <span class="date-cell">${fmt}</span>
               <span style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,239,230,0.55);">${e.label}</span>
+              <span class="note-chevron" style="margin-left:auto;">▾</span>
             </div>
             <div class="note-body">
               ${e.topic ? `<div class="note-topic"><span class="note-topic-label">Topic</span>${e.topic}</div>` : ''}
               ${txnHTML ? `<div class="note-transactions">${txnHTML}</div>` : ''}
             </div>`;
         }
+
+        card.querySelector('.note-card-header').addEventListener('click', () => {
+          card.classList.toggle('collapsed');
+        });
+
         notesContainer.appendChild(card);
+      });
+
+      // Auto-expand note card when navigated to via anchor link
+      window.addEventListener('hashchange', () => {
+        const el = document.querySelector(location.hash);
+        if (el && el.classList.contains('note-card')) el.classList.remove('collapsed');
       });
     }
   </script>
