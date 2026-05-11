@@ -641,41 +641,87 @@
     });
 
     // ── NOTES ──
+    // Out-of-rotation entries (pre-schedule meetings, group decisions, etc.)
+    const extraNotes = [
+      {
+        date: '2026-04-12',
+        label: 'Group Meeting',
+        topic: '',
+        transactions: [
+          'SELL Coherus Sciences — 75 shares',
+          'SELL Tencent — 15 shares',
+          'BUY Nextera Energy — 5 shares',
+        ]
+      },
+    ];
+
     const notesWithContent = meetings.filter(m => m.topic || m.transactions.length);
-    if (notesWithContent.length) {
+    if (notesWithContent.length || extraNotes.length) {
       document.getElementById('notes-section').style.display = '';
       const notesContainer = document.getElementById('notes-container');
-      meetings.forEach((m, i) => {
-        if (!m.topic && !m.transactions.length) return;
-        const d   = new Date(m.date + 'T12:00:00');
-        const fmt = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
-        const tc  = m.type === 'educational' ? 'educational' : 'pitch';
-        const tl  = m.type === 'educational' ? 'Educational' : 'Stock Pitch';
 
-        const txnHTML = m.transactions.map(t => {
+      function makeTxnHTML(transactions) {
+        return transactions.map(t => {
           const action = t.trim().split(' ')[0].toLowerCase();
           const cls = action === 'buy' ? 'buy' : action === 'sell' ? 'sell' : '';
           return `<div class="transaction"><span class="txn-badge ${cls}">${action.toUpperCase()}</span><span>${t.trim().replace(/^(buy|sell)\s+/i,'')}</span></div>`;
         }).join('');
+      }
 
+      // Combine scheduled meeting notes + extra notes, sort by date
+      const allNotes = [];
+      meetings.forEach((m, i) => {
+        if (m.topic || m.transactions.length)
+          allNotes.push({ date: m.date, type: 'meeting', m, i });
+      });
+      extraNotes.forEach(e => {
+        if (e.topic || e.transactions.length)
+          allNotes.push({ date: e.date, type: 'extra', e });
+      });
+      allNotes.sort((a, b) => a.date.localeCompare(b.date));
+
+      allNotes.forEach(entry => {
         const card = document.createElement('div');
         card.className = 'note-card';
-        card.id = 'note-' + (i + 1);
-        card.innerHTML = `
-          <div class="note-card-header">
-            <span class="meeting-num">${String(i+1).padStart(2,'0')}</span>
-            <span class="date-cell">${fmt}</span>
-            <span class="type-badge ${tc}">${tl}</span>
-            <div class="member-cell">
-              <span class="member-pip" style="background:${MEMBER_COLORS[m.member]};border-color:rgba(244,239,230,0.4);"></span>
-              <span style="color:var(--cream);font-weight:700;">${m.member}</span>
+
+        if (entry.type === 'meeting') {
+          const { m, i } = entry;
+          const d   = new Date(m.date + 'T12:00:00');
+          const fmt = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+          const tc  = m.type === 'educational' ? 'educational' : 'pitch';
+          const tl  = m.type === 'educational' ? 'Educational' : 'Stock Pitch';
+          const txnHTML = makeTxnHTML(m.transactions);
+          card.id = 'note-' + (i + 1);
+          card.innerHTML = `
+            <div class="note-card-header">
+              <span class="meeting-num">${String(i+1).padStart(2,'0')}</span>
+              <span class="date-cell">${fmt}</span>
+              <span class="type-badge ${tc}">${tl}</span>
+              <div class="member-cell">
+                <span class="member-pip" style="background:${MEMBER_COLORS[m.member]};border-color:rgba(244,239,230,0.4);"></span>
+                <span style="color:var(--cream);font-weight:700;">${m.member}</span>
+              </div>
+              <a class="note-back-link" href="#row-${i+1}">↑ Table</a>
             </div>
-            <a class="note-back-link" href="#row-${i+1}">↑ Table</a>
-          </div>
-          <div class="note-body">
-            ${m.topic ? `<div class="note-topic"><span class="note-topic-label">Topic</span>${m.topic}</div>` : ''}
-            ${txnHTML ? `<div class="note-transactions">${txnHTML}</div>` : ''}
-          </div>`;
+            <div class="note-body">
+              ${m.topic ? `<div class="note-topic"><span class="note-topic-label">Topic</span>${m.topic}</div>` : ''}
+              ${txnHTML ? `<div class="note-transactions">${txnHTML}</div>` : ''}
+            </div>`;
+        } else {
+          const { e } = entry;
+          const d   = new Date(e.date + 'T12:00:00');
+          const fmt = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+          const txnHTML = makeTxnHTML(e.transactions);
+          card.innerHTML = `
+            <div class="note-card-header">
+              <span class="date-cell">${fmt}</span>
+              <span style="font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(244,239,230,0.55);">${e.label}</span>
+            </div>
+            <div class="note-body">
+              ${e.topic ? `<div class="note-topic"><span class="note-topic-label">Topic</span>${e.topic}</div>` : ''}
+              ${txnHTML ? `<div class="note-transactions">${txnHTML}</div>` : ''}
+            </div>`;
+        }
         notesContainer.appendChild(card);
       });
     }
