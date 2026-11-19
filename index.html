@@ -442,7 +442,7 @@
 
   <footer class="page-footer">
     <span>Redmond Investment Group · Meeting Schedule</span>
-    <span>May 2026 – Jun 2027 · 12 Sessions</span>
+    <span>May 2026 – Jun 2027 · 10 Sessions</span>
   </footer>
 
   <script>
@@ -451,21 +451,19 @@
       { date: '2026-05-10', member: 'JD',      topic: 'Micron Technology (MU)', transactions: [] },
       { date: '2026-06-14', member: 'Andrew',   topic: '', transactions: [] },
       { date: '2026-09-13', member: 'Esteban',  topic: '', transactions: [] },
-      { date: '2026-10-11', member: 'Ryan',     topic: '', transactions: [] },
-      { date: '2026-11-08', member: 'Jess',     topic: '', transactions: [] },
-      { date: '2026-12-13', member: 'Adam',     topic: '', transactions: [] },
-      { date: '2027-01-10', member: 'JD',       topic: '', transactions: [] },
-      { date: '2027-02-14', member: 'Andrew',   topic: '', transactions: [] },
-      { date: '2027-03-14', member: 'Esteban',  topic: '', transactions: [] },
-      { date: '2027-04-11', member: 'Ryan',     topic: '', transactions: [] },
-      { date: '2027-05-09', member: 'Jess',     topic: '', transactions: [] },
-      { date: '2027-06-13', member: 'Adam',     topic: '', transactions: [] },
+      { date: '2026-12-13', member: 'Ryan',     topic: '', transactions: [] },
+      { date: '2027-01-10', member: 'Jess',     topic: '', transactions: [] },
+      { date: '2027-02-14', member: 'Adam',     topic: '', transactions: [] },
+      { date: '2027-03-14', member: 'JD',       topic: '', transactions: [] },
+      { date: '2027-04-11', member: 'Andrew',   topic: '', transactions: [] },
+      { date: '2027-05-09', member: 'Esteban',  topic: '', transactions: [] },
+      { date: '2027-06-13', member: 'Ryan',     topic: '', transactions: [] },
     ];
 
     // Each member's first appearance type; subsequent appearances flip
     const MEMBER_BASE_TYPE = {
       JD: 'pitch', Andrew: 'educational', Esteban: 'pitch',
-      Ryan: 'educational', Jess: 'pitch', Adam: 'educational'
+      Ryan: 'pitch', Jess: 'educational', Adam: 'pitch'
     };
     const memberOccurrence = {};
     meetings.forEach(m => {
